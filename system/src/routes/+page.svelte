@@ -1,57 +1,67 @@
-<div class="grid">
-	<a href="printer1">
-		<div class="print1 box">
-			<img src="Ultimaker-3.png" alt="printer 1" class="image" />
-			<h1 class="text">Printer 1</h1>
-			<div class="meter">
-				<span style="width: {foo}%" />
+<div class="container">
+    <div class="grid">
+        <a href="printer1">
+            <div class="print1 box">
+                <img src="Ultimaker3.png" alt="printer 1" class="image" />
+                <h1 class="text">Printer 1</h1>
+                <p>{time_left * 60 - foo} seconds left left</p>
+                <div class="meter">
+                    <span style="width: {foo}%" />
+                </div>
+                <p class="text">Administrator</p>
+            </div>
+        </a>
+        
+        <a href="">
+            <div class="print2 box">
+                <img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
+                <h1 class="text">Printer 2</h1>
+                <div class="meter">
+                    <span style="width: 25%" />
 			</div>
 			<p class="text">Administrator</p>
 		</div>
 	</a>
-
+    
 	<a href="">
-		<div class="print2 box">
-			<img src="Ultimaker-3-Extended.png" alt="printer 2" class="image" />
-			<h1 class="text">Printer 2</h1>
-			<div class="meter">
-				<span style="width: 25%" />
-			</div>
-			<p class="text">Administrator</p>
-		</div>
-	</a>
-
-	<a href="">
-		<div class="print3 box">
-			<img src="Ultimaker-3.png" alt="printer 3" class="image" />
+        <div class="print3 box">
+            <img src="Ultimaker3.png" alt="printer 3" class="image" />
 			<h1 class="text">Printer 3</h1>
 			<div class="meter">
-				<span style="width: 25%" />
+                <span style="width: 25%" />
 			</div>
 			<p class="text">Administrator</p>
 		</div>
 	</a>
-
+    
 	<a href="">
-		<div class="print4 box">
-			<img src="Flashforge-Creator-3.png" alt="printer 4" class="image" />
+        <div class="print4 box">
+            <img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 			<h1 class="text">Printer 4</h1>
 			<div class="meter">
-				<span style="width: 25%" />
+                <span style="width: 25%" />
 			</div>
 			<p class="text">Administrator</p>
 		</div>
 	</a>
 </div>
+</div>
 
 <style>
-	:global(body) {
-		overflow: hidden;
+    :global(body) {
+        overflow: hidden;
 		max-width: 1536px;
 		margin-left: auto;
 		margin-right: auto;
-		background-color: #0f0f10;
+		background-color: #0f0f0f;
 	}
+
+    .container{
+        width: 100%;
+        max-width: 1920x;
+        max-height: 100vh;
+        display: block;        
+    }
 
     a{
         text-decoration: none;
@@ -113,6 +123,21 @@
 
 <script>
 
-const foo = 50
+let foo = 0
+let time_left = 2
+
+function calcTimeLeft(timer){
+    return (timer * 600)
+}
+
+calcTimeLeft(time_left)
+
+
+var timer = setInterval(()=> {
+    if(foo == 100){
+        clearInterval(timer)
+    }
+    foo+=0.1
+},  calcTimeLeft(time_left))
 
 </script>
