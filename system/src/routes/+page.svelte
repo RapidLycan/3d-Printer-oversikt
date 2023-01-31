@@ -1,3 +1,21 @@
+<script>
+	let foo = 0;
+	let time_left = 2;
+
+	function calcTimeLeft(timer) {
+		return timer * 600;
+	}
+
+	calcTimeLeft(time_left);
+
+	var timer = setInterval(() => {
+		if (foo == 100) {
+			clearInterval(timer);
+		}
+		foo += 0.1;
+	}, calcTimeLeft(time_left));
+</script>
+
 <div class="container">
     <div class="grid">
         <a href="printer1">
@@ -76,24 +94,24 @@
 </div>
 
 <style>
-    :global(body) {
-        overflow: hidden;
+	:global(body) {
+		overflow: hidden;
 		max-width: 1536px;
 		margin-left: auto;
 		margin-right: auto;
 		background-color: #0f0f0f;
 	}
 
-    .container{
-        width: 100%;
-        max-width: 1920x;
-        max-height: 100vh;
-        display: block;        
-    }
+	.container {
+		width: 100%;
+		max-width: 1920x;
+		max-height: 100vh;
+		display: block;
+	}
 
-    a{
-        text-decoration: none;
-    }
+	a {
+		text-decoration: none;
+	}
 
 	.grid {
 		display: grid;
