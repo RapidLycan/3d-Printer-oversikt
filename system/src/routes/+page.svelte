@@ -1,13 +1,10 @@
-<script>
-</script>
-
 <div class="grid">
 	<a href="printer1">
 		<div class="print1 box">
 			<img src="Ultimaker-3.png" alt="printer 1" class="image" />
 			<h1 class="text">Printer 1</h1>
 			<div class="meter">
-				<span style="width: 25%" />
+				<span style="width: {foo}%" />
 			</div>
 			<p class="text">Administrator</p>
 		</div>
@@ -55,6 +52,11 @@
 		margin-right: auto;
 		background-color: #0f0f10;
 	}
+
+    a{
+        text-decoration: none;
+    }
+
 	.grid {
 		display: grid;
 		justify-content: space-between;
@@ -108,3 +110,9 @@
 		overflow: hidden;
 	}
 </style>
+
+<script>
+
+const foo = 50
+
+</script>
