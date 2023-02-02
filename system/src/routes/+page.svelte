@@ -1,35 +1,25 @@
-<script>
-	let foo = 0;
-	let time_left = 2;
-
-	function calcTimeLeft(timer) {
-		return timer * 600;
-	}
-
-	calcTimeLeft(time_left);
-
-	var timer = setInterval(() => {
-		if (foo == 100) {
-			clearInterval(timer);
-		}
-		foo += 0.1;
-	}, calcTimeLeft(time_left));
-</script>
-
 <div class="container">
     <div class="grid">
+
+        
         <a href="printer1">
             <div class="print1 box">
                 <img src="Ultimaker3.png" alt="printer 1" class="image" />
                 <h1 class="text">Printer 1</h1>
-
+                {#if printers[0].timerCount >= 1}
+                
+            
                 {#if printers[0].timerCount < 61}
-                <p>{printers[0].timerCount} seconds left</p>
+                    <p>{printers[0].timerCount} seconds left</p>
                 {:else if printers[0].timerCount > 60 && printers[0].timerCount < 3600}
-                <p>{Math.trunc(printers[0].timerCount/60)} minutes left</p>
+                    <p>{Math.trunc(printers[0].timerCount/60)} minutes left</p>
                 {:else}
-                <p>{Math.round((printers[0].timerCount/6000)* 10) / 10} hours left</p>
+                    <p>{Math.round((printers[0].timerCount/3600)* 10) / 10} hours left</p>
                 {/if}
+
+            {:else}
+                <p>Ready</p>
+            {/if} 
                 <div class="meter">
                     <span style="width: {printers[0].timeBar}%" />
                 </div>
@@ -37,17 +27,25 @@
             </div>
         </a>
         
+
         <a href="">
             <div class="print2 box">
                 <img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
                 <h1 class="text">Printer 2</h1>
+                {#if printers[1].timerCount >= 1}
+                
+            
                 {#if printers[1].timerCount < 61}
-                <p>{printers[1].timerCount} seconds left</p>
+                    <p>{printers[1].timerCount} seconds left</p>
                 {:else if printers[1].timerCount > 60 && printers[1].timerCount < 3600}
-                <p>{Math.trunc(printers[1].timerCount/60)} minutes left</p>
+                    <p>{Math.trunc(printers[1].timerCount/60)} minutes left</p>
                 {:else}
-                <p>{Math.round((printers[1].timerCount/6000)* 10) / 10} hours left</p>
+                    <p>{Math.round((printers[1].timerCount/3600)* 10) / 10} hours left</p>
                 {/if}
+
+            {:else}
+                <p>Ready</p>
+            {/if} 
                 <div class="meter">
                     <span style="width: {printers[1].timeBar}%" />
 			</div>
@@ -55,17 +53,25 @@
 		</div>
 	</a>
     
+
 	<a href="">
         <div class="print3 box">
             <img src="Ultimaker3.png" alt="printer 3" class="image" />
 			<h1 class="text">Printer 3</h1>
-            {#if printers[2].timerCount < 61}
-            <p>{printers[2].timerCount} seconds left</p>
-            {:else if printers[2].timerCount > 60 && printers[2].timerCount < 3600}
-            <p>{Math.trunc(printers[2].timerCount/60)} minutes left</p>
+            {#if printers[2].timerCount >= 1}
+                
+            
+                {#if printers[2].timerCount < 61}
+                    <p>{printers[2].timerCount} seconds left</p>
+                {:else if printers[2].timerCount > 60 && printers[2].timerCount < 3600}
+                    <p>{Math.trunc(printers[2].timerCount/60)} minutes left</p>
+                {:else}
+                    <p>{Math.round((printers[2].timerCount/3600)* 10) / 10} hours left</p>
+                {/if}
+
             {:else}
-            <p>{Math.round((printers[2].timerCount/6000)* 10) / 10} hours left</p>
-            {/if}
+                <p>Ready</p>
+            {/if}  
 			<div class="meter">
                 <span style="width: {printers[2].timeBar}%" />
 			</div>
@@ -73,17 +79,25 @@
 		</div>
 	</a>
     
+
 	<a href="">
         <div class="print4 box">
             <img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 			<h1 class="text">Printer 4</h1>
-            {#if printers[3].timerCount < 61}
-            <p>{printers[3].timerCount} seconds left</p>
-            {:else if printers[3].timerCount > 60 && printers[3].timerCount < 3600}
-            <p>{Math.trunc(printers[3].timerCount/60)} minutes left</p>
+            {#if printers[3].timerCount >= 1}
+                
+            
+                {#if printers[3].timerCount < 61}
+                    <p>{printers[3].timerCount} seconds left</p>
+                {:else if printers[3].timerCount > 60 && printers[3].timerCount < 3600}
+                    <p>{Math.trunc(printers[3].timerCount/60)} minutes left</p>
+                {:else}
+                    <p>{Math.round((printers[3].timerCount/3600)* 10) / 10} hours left</p>
+                {/if}
+
             {:else}
-            <p>{Math.round((printers[3].timerCount/6000)* 10) / 10} hours left</p>
-            {/if}
+                <p>Ready</p>
+            {/if} 
 			<div class="meter">
                 <span style="width: {printers[3].timeBar}%" />
 			</div>
@@ -91,15 +105,23 @@
 		</div>
 	</a>
 </div>
+
+
 </div>
 
 <style>
+    *{
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
 	:global(body) {
 		overflow: hidden;
 		max-width: 1536px;
-		margin-left: auto;
-		margin-right: auto;
+		margin: 40px auto;
 		background-color: #0f0f0f;
+        background-image: url(bg.png);
+        background-repeat: no-repeat;
+        background-size:cover
 	}
 
 	.container {
@@ -146,7 +168,7 @@
 		box-sizing: content-box;
 		height: 20px; /* Can be anything */
 		position: relative;
-		margin: 60px 0 20px 0; /* Just for demo spacing */
+		margin: 20px 0 20px 0; /* Just for demo spacing */
 		background: #555;
 		border-radius: 25px;
 		padding: 10px;
@@ -167,7 +189,14 @@
 	}
 
     p{
-        color: rgb(43, 194, 83)
+        color: rgb(43, 194, 83);
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    h1{
+        margin-bottom: 60px;
+        font-size: 3rem;
     }
 </style>
 
@@ -176,7 +205,7 @@
 let prints = [
 {
     hours: 0,
-    minutes: 60,
+    minutes: 70,
     name: "jonas",
     printer: 0
 },
@@ -188,7 +217,7 @@ let prints = [
 },
 {
     hours: 0,
-    minutes: 2,
+    minutes: 1,
     name: "jeff",
     printer: 2
 },
@@ -235,6 +264,16 @@ function calcTimeLeft(timer){
     return (timer * 60)
 }
 
+function clean(i, cleanTime) {
+    setTimeout(()=> {
+        printers[i].time = 0
+        printers[i].timeBar = 0
+        printers[i].timeLeft = 0
+        printers[i].name = undefined
+        printers[i].timeCount = 0
+    }, cleanTime)
+}
+
 function start(amount){
 
     const i = amount.printer
@@ -247,6 +286,7 @@ function start(amount){
     var barTimer = setInterval(()=> {
         if(printers[i].timeBar >= 100){
             clearInterval(barTimer)
+            clean(i, 86400000)
         }
         printers[i].timeBar+=0.1
     }, calcTimeLeft(printers[i].time))
@@ -254,12 +294,12 @@ function start(amount){
     var leftTime = setInterval(()=> {
         if(printers[i].timerCount > 0){
             printers[i].timerCount--
+        }else {
+            clearInterval(leftTime)
         }
     }, 1000)
    
 }
-
-
 
 start(prints[0])
 start(prints[2])
