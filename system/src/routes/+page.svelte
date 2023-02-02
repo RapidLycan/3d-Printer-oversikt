@@ -2,7 +2,7 @@
     <div class="grid">
 
         
-        <a href="printer1">
+        <a href="/printer-1">
             <div class="print1 box">
                 <img src="Ultimaker3.png" alt="printer 1" class="image" />
                 <h1 class="text">Printer 1</h1>
