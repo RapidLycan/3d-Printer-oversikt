@@ -106,7 +106,7 @@
 	<div class="grid">
 		<div class="print1 box">
 			<img src="Ultimaker3.png" alt="printer 1" class="image" />
-			<h1 class="text">Printer 1</h1>
+			<h1 class="text">Ultimaker 3D 3</h1>
 			{#if printers[0].timerCount >= 1}
 				{#if printers[0].timerCount < 61}
 					<p>{printers[0].timerCount} seconds left</p>
@@ -121,12 +121,12 @@
 			<div class="meter">
 				<span style="width: {printers[0].timeBar}%" />
 			</div>
-			<p class="text">{printers[0].name}</p>
+			<p class="text">Ansvarlig for print:+ {printers[0].name}</p>
 		</div>
 
 		<div class="print2 box">
 			<img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
-			<h1 class="text">Printer 2</h1>
+			<h1 class="text">Utlimaker Extended 3D 2</h1>
 			{#if printers[1].timerCount >= 1}
 				{#if printers[1].timerCount < 61}
 					<p>{printers[1].timerCount} seconds left</p>
@@ -141,12 +141,12 @@
 			<div class="meter">
 				<span style="width: {printers[1].timeBar}%" />
 			</div>
-			<p class="text">{printers[1].name}</p>
+			<p class="text">Ansvarlig for print: {printers[1].name}</p>
 		</div>
 
 		<div class="print3 box">
 			<img src="Ultimaker3.png" alt="printer 3" class="image" />
-			<h1 class="text">Printer 3</h1>
+			<h1 class="text">Ultimaker 3D 1</h1>
 			{#if printers[2].timerCount >= 1}
 				{#if printers[2].timerCount < 61}
 					<p>{printers[2].timerCount} seconds left</p>
@@ -161,12 +161,12 @@
 			<div class="meter">
 				<span style="width: {printers[2].timeBar}%" />
 			</div>
-			<p class="text">{printers[2].name}</p>
+			<p class="text">Ansvarlig for print: {printers[2].name}</p>
 		</div>
 
 		<div class="print4 box">
 			<img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
-			<h1 class="text">Printer 4</h1>
+			<h1 class="text">Flashforge</h1>
 			{#if printers[3].timerCount >= 1}
 				{#if printers[3].timerCount < 61}
 					<p>{printers[3].timerCount} seconds left</p>
@@ -181,7 +181,7 @@
 			<div class="meter">
 				<span style="width: {printers[3].timeBar}%" />
 			</div>
-			<p class="text">{printers[3].name}</p>
+			<p class="text">Ansvarlig for print: {printers[3].name}</p>
 		</div>
 	</div>
 </div>
@@ -197,6 +197,10 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 		text-decoration: none;
+		margin: auto;
+		align-items: center;
+		display: flex;
+		height: 100vh;
 	}
 
 	.container {
@@ -211,7 +215,7 @@
 		align-items: center;
 		margin: 0 auto;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 5rem;
+		gap: 2rem;
 	}
 
 	.box {
@@ -221,7 +225,7 @@
 	}
 
 	.image {
-		height: 10rem;
+		height: 8rem;
 		object-fit: contain;
 		margin: 0 auto;
 		width: 100%;
@@ -230,16 +234,16 @@
 	.text {
 		text-align: center;
 		color: #92959b;
+		margin: 10px 10px;
 	}
 
 	.meter {
 		box-sizing: content-box;
-		height: 10px; /* Can be anything */
+		height: 15px; /* Can be anything */
 		position: relative;
-		margin: 20px 0 20px 0; /* Just for demo spacing */
 		background: #555;
 		border-radius: 25px;
-		padding: 10px;
+		padding: 5px;
 		box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 	}
 	.meter > span {
@@ -259,11 +263,11 @@
 	p {
 		color: rgb(43, 194, 83);
 		text-align: center;
-		font-size: 1rem;
+		font-size: 14px;
 	}
 
 	h1 {
-		margin-bottom: 30px;
-		font-size: 2rem;
+		margin-bottom: 5px;
+		font-size: 25px;
 	}
 </style>
