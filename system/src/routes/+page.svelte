@@ -1,4 +1,9 @@
 <script>
+	let statusult1 = true;
+	let statusult2 = false;
+	let statusultex = false;
+	let statusforge = true;
+
 	let prints = [
 		{
 			hours: 0,
@@ -104,83 +109,113 @@
 
 <div class="container">
 	<div class="grid">
-		<div class="print1 box">
+		<div class="box">
 			<img src="Ultimaker3.png" alt="printer 1" class="image" />
 			<h1 class="text">Ultimaker 3D 3</h1>
-			{#if printers[0].timerCount >= 1}
-				{#if printers[0].timerCount < 61}
-					<p>{printers[0].timerCount} seconds left</p>
-				{:else if printers[0].timerCount > 60 && printers[0].timerCount < 3600}
-					<p>{Math.trunc(printers[0].timerCount / 60)} minutes left</p>
+			{#if statusult1 == true}
+				{#if printers[0].timerCount >= 1}
+					{#if printers[0].timerCount < 61}
+						<p>{printers[0].timerCount} seconds left</p>
+					{:else if printers[0].timerCount > 60 && printers[0].timerCount < 3600}
+						<p>{Math.trunc(printers[0].timerCount / 60)} minutes left</p>
+					{:else}
+						<p>{Math.round((printers[0].timerCount / 3600) * 10) / 10} hours left</p>
+					{/if}
 				{:else}
-					<p>{Math.round((printers[0].timerCount / 3600) * 10) / 10} hours left</p>
+					<p>Ready</p>
 				{/if}
+				<div class="meter">
+					<span style="width: {printers[0].timeBar}%" />
+				</div>
 			{:else}
-				<p>Ready</p>
+				<p class="brokenmsg">out of order</p>
+				<div class="broken">
+					<span style="width:100" />
+				</div>
 			{/if}
-			<div class="meter">
-				<span style="width: {printers[0].timeBar}%" />
-			</div>
-			<p class="text">Ansvarlig for print:+ {printers[0].name}</p>
+
+			<p class="text">Ansvarlig for print: {printers[0].name}</p>
 		</div>
 
-		<div class="print2 box">
+		<div class="box">
 			<img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
 			<h1 class="text">Utlimaker Extended 3D 2</h1>
-			{#if printers[1].timerCount >= 1}
-				{#if printers[1].timerCount < 61}
-					<p>{printers[1].timerCount} seconds left</p>
-				{:else if printers[1].timerCount > 60 && printers[1].timerCount < 3600}
-					<p>{Math.trunc(printers[1].timerCount / 60)} minutes left</p>
+			{#if statusultex == true}
+				{#if printers[1].timerCount >= 1}
+					{#if printers[1].timerCount < 61}
+						<p>{printers[1].timerCount} seconds left</p>
+					{:else if printers[1].timerCount > 60 && printers[1].timerCount < 3600}
+						<p>{Math.trunc(printers[1].timerCount / 60)} minutes left</p>
+					{:else}
+						<p>{Math.round((printers[1].timerCount / 3600) * 10) / 10} hours left</p>
+					{/if}
 				{:else}
-					<p>{Math.round((printers[1].timerCount / 3600) * 10) / 10} hours left</p>
+					<p>Ready</p>
 				{/if}
+				<div class="meter">
+					<span style="width: {printers[1].timeBar}%" />
+				</div>
 			{:else}
-				<p>Ready</p>
+				<p class="brokenmsg">out of order</p>
+				<div class="broken">
+					<span style="width:100" />
+				</div>
 			{/if}
-			<div class="meter">
-				<span style="width: {printers[1].timeBar}%" />
-			</div>
+
 			<p class="text">Ansvarlig for print: {printers[1].name}</p>
 		</div>
 
-		<div class="print3 box">
+		<div class="box">
 			<img src="Ultimaker3.png" alt="printer 3" class="image" />
 			<h1 class="text">Ultimaker 3D 1</h1>
-			{#if printers[2].timerCount >= 1}
-				{#if printers[2].timerCount < 61}
-					<p>{printers[2].timerCount} seconds left</p>
-				{:else if printers[2].timerCount > 60 && printers[2].timerCount < 3600}
-					<p>{Math.trunc(printers[2].timerCount / 60)} minutes left</p>
+			{#if statusult2 == true}
+				{#if printers[2].timerCount >= 1}
+					{#if printers[2].timerCount < 61}
+						<p>{printers[2].timerCount} seconds left</p>
+					{:else if printers[2].timerCount > 60 && printers[2].timerCount < 3600}
+						<p>{Math.trunc(printers[2].timerCount / 60)} minutes left</p>
+					{:else}
+						<p>{Math.round((printers[2].timerCount / 3600) * 10) / 10} hours left</p>
+					{/if}
 				{:else}
-					<p>{Math.round((printers[2].timerCount / 3600) * 10) / 10} hours left</p>
+					<p>Ready</p>
 				{/if}
+				<div class="meter">
+					<span style="width: {printers[2].timeBar}%" />
+				</div>
 			{:else}
-				<p>Ready</p>
+				<p class="brokenmsg">out of order</p>
+				<div class="broken">
+					<span style="width:100" />
+				</div>
 			{/if}
-			<div class="meter">
-				<span style="width: {printers[2].timeBar}%" />
-			</div>
 			<p class="text">Ansvarlig for print: {printers[2].name}</p>
 		</div>
 
-		<div class="print4 box">
+		<div class="box">
 			<img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 			<h1 class="text">Flashforge</h1>
-			{#if printers[3].timerCount >= 1}
-				{#if printers[3].timerCount < 61}
-					<p>{printers[3].timerCount} seconds left</p>
-				{:else if printers[3].timerCount > 60 && printers[3].timerCount < 3600}
-					<p>{Math.trunc(printers[3].timerCount / 60)} minutes left</p>
+			{#if statusforge == true}
+				{#if printers[3].timerCount >= 1}
+					{#if printers[3].timerCount < 61}
+						<p>{printers[3].timerCount} seconds left</p>
+					{:else if printers[3].timerCount > 60 && printers[3].timerCount < 3600}
+						<p>{Math.trunc(printers[3].timerCount / 60)} minutes left</p>
+					{:else}
+						<p>{Math.round((printers[3].timerCount / 3600) * 10) / 10} hours left</p>
+					{/if}
 				{:else}
-					<p>{Math.round((printers[3].timerCount / 3600) * 10) / 10} hours left</p>
+					<p>Ready</p>
 				{/if}
+				<div class="meter">
+					<span style="width: {printers[3].timeBar}%" />
+				</div>
 			{:else}
-				<p>Ready</p>
+				<p class="brokenmsg">out of order</p>
+				<div class="broken">
+					<span style="width:100" />
+				</div>
 			{/if}
-			<div class="meter">
-				<span style="width: {printers[3].timeBar}%" />
-			</div>
 			<p class="text">Ansvarlig for print: {printers[3].name}</p>
 		</div>
 	</div>
@@ -259,11 +294,39 @@
 		position: relative;
 		overflow: hidden;
 	}
+	.broken {
+		box-sizing: content-box;
+		height: 15px; /* Can be anything */
+		position: relative;
+		background: #555;
+		border-radius: 25px;
+		padding: 5px;
+		box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+	}
+	.broken > span {
+		display: block;
+		height: 100%;
+		border-top-right-radius: 8px;
+		border-bottom-right-radius: 8px;
+		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
+		background-color: rgb(194, 43, 43);
+		background-image: linear-gradient(center bottom, rgb(194, 43, 43) 37%, rgb(240, 84, 84) 69%);
+		box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+		position: relative;
+		overflow: hidden;
+	}
 
 	p {
 		color: rgb(43, 194, 83);
 		text-align: center;
 		font-size: 14px;
+	}
+
+	.brokenmsg {
+		text-align: center;
+		font-size: 14px;
+		color: rgb(194, 43, 43);
 	}
 
 	h1 {
