@@ -1,6 +1,9 @@
 <script>
-/* 	import Dialog from '@smui/dialog/src/Dialog.svelte';
- */	import Input from '../components/input.svelte';
+	import Dialog from '../components/Dialog.svelte';
+	/**
+	 * @type {any}
+	 */
+	let activePrinter = null;
 
 	let statusult1 = true;
 	let statusult2 = false;
@@ -110,42 +113,55 @@
 	start(prints[1]);
 </script>
 
-<Input />
+<Dialog isOpen={activePrinter !== null}>
+	{#if activePrinter}
+		<h1>Fyll in informasjonen for din print</h1>
+		<form>
+			<div class="input-form">
+				<input type="text" placeholder="Ditt navn" required />
+				<input type="text" placeholder="Ansvarlig" required />
+				<input type="text" placeholder="Klasse" />
+			</div>
+			<input type="submit" class="submit" />
+			<button on:click={() => (activePrinter = null)}>Close</button>
+		</form>
+	{/if}
+</Dialog>
+
 <div class="align">
 	<div class="container">
 		<div class="grid">
-			
-				<div class="box">
-					<img src="Ultimaker3.png" alt="printer 1" class="image" />
-					<h1 class="text">Ultimaker 3D 3</h1>
-					{#if statusult1 == true}
-						{#if printers[0].timerCount >= 1}
-							{#if printers[0].timerCount < 61}
-								<p class="timer">{printers[0].timerCount} seconds left</p>
-							{:else if printers[0].timerCount > 60 && printers[0].timerCount < 3600}
-								<p class="timer">{Math.trunc(printers[0].timerCount / 60)} minutes left</p>
-							{:else}
-								<p class="timer">
-									{Math.round((printers[0].timerCount / 3600) * 10) / 10} hours left
-								</p>
-							{/if}
+			<button class="box" on:click={() => (activePrinter = { id: '1' })}>
+				<img src="Ultimaker3.png" alt="printer 1" class="image" />
+				<h1 class="text">Ultimaker 3D 3</h1>
+				{#if statusult1 == true}
+					{#if printers[0].timerCount >= 1}
+						{#if printers[0].timerCount < 61}
+							<p class="timer">{printers[0].timerCount} seconds left</p>
+						{:else if printers[0].timerCount > 60 && printers[0].timerCount < 3600}
+							<p class="timer">{Math.trunc(printers[0].timerCount / 60)} minutes left</p>
 						{:else}
-							<p>Ready</p>
+							<p class="timer">
+								{Math.round((printers[0].timerCount / 3600) * 10) / 10} hours left
+							</p>
 						{/if}
-						<div class="meter">
-							<span style="width: {printers[0].timeBar}%" />
-						</div>
 					{:else}
-						<p class="brokenmsg">out of order</p>
-						<div class="broken">
-							<span style="width:100" />
-						</div>
+						<p>Ready</p>
 					{/if}
+					<div class="meter">
+						<span style="width: {printers[0].timeBar}%" />
+					</div>
+				{:else}
+					<p class="brokenmsg">out of order</p>
+					<div class="broken">
+						<span style="width:100" />
+					</div>
+				{/if}
 
-					<p class="text">Ansvarlig for print: {printers[0].name}</p>
-				</div>
+				<p class="text">Ansvarlig for print: {printers[0].name}</p>
+			</button>
 
-			<div class="box">
+			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
 				<img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
 				<h1 class="text">Utlimaker Extended 3D 2</h1>
 				{#if statusultex == true}
@@ -171,11 +187,10 @@
 						<span style="width:100" />
 					</div>
 				{/if}
-
 				<p class="text">Ansvarlig for print: {printers[1].name}</p>
-			</div>
+			</button>
 
-			<div class="box">
+			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
 				<img src="Ultimaker3.png" alt="printer 3" class="image" />
 				<h1 class="text">Ultimaker 3D 1</h1>
 				{#if statusult2 == true}
@@ -202,9 +217,9 @@
 					</div>
 				{/if}
 				<p class="text">Ansvarlig for print: {printers[2].name}</p>
-			</div>
+			</button>
 
-			<div class="box">
+			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
 				<img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 				<h1 class="text">Flashforge</h1>
 				{#if statusforge == true}
@@ -231,12 +246,27 @@
 					</div>
 				{/if}
 				<p class="text">Ansvarlig for print: {printers[3].name}</p>
-			</div>
+			</button>
 		</div>
 	</div>
 </div>
 
 <style>
+	.input-form {
+		display: flex;
+		row-gap: 20px;
+		margin: 1rem 0;
+	}
+
+	input {
+		background-color: #222222;
+		padding: 10px 30px;
+		border-radius: 1rem;
+		font-weight: 600;
+		border: none;
+		color: #92959b;
+	}
+
 	:global(*) {
 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	}
@@ -251,6 +281,7 @@
 		padding: 0 !important;
 		margin: 0 !important;
 	}
+
 	.align {
 		display: flex;
 		align-items: center;
