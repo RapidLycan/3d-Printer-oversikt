@@ -1,14 +1,41 @@
 <script>
+	import { onMount } from 'svelte';
 	import Dialog from '../components/Dialog.svelte';
 	/**
 	 * @type {any}
 	 */
 	let activePrinter = null;
+	let history = [];
+
+	let lastPrinterOne = null;
+	let lastPrinterTwo = null;
+	let lastPrinterThree = null;
+	let lastPrinterFour = null;
 
 	let statusult1 = true;
 	let statusult2 = false;
 	let statusultex = false;
 	let statusforge = true;
+
+	const updateHistory = (newHistory) => {
+		localStorage.setItem('history', JSON.stringify(newHistory));
+		
+			let sorted = newHistory.sort((a, b) => {
+				return new Date(b.date) - new Date(a.date);
+			});
+			lastPrinterOne = sorted.find((item) => item.printer === "1");
+			lastPrinterTwo = sorted.find((item) => item.printer === "2");
+			lastPrinterThree = sorted.find((item) => item.printer === "3");
+			lastPrinterFour = sorted.find((item) => item.printer === "4");
+	}
+
+	onMount(() => {
+		const prevHistory = localStorage.getItem('history');
+		if (prevHistory) {
+			history = JSON.parse(prevHistory);
+			updateHistory(history);
+		}
+	})
 
 	let prints = [
 		{
@@ -107,6 +134,32 @@
 		}, 1000);
 	}
 
+	let name = '';
+	let responsible = '';
+	let classs = '';
+
+
+	const handleSubmit = () => {
+		const historyStorage = window.localStorage.getItem('history');
+		let historyArray = history ? JSON.parse(historyStorage) : [];
+
+		if(!historyArray) historyArray = [];
+
+
+		
+		historyArray.push({
+			name,
+			responsible,
+			classs,
+			date: new Date().toISOString(),
+			printer: activePrinter.id
+		});
+			updateHistory(historyArray);
+
+		window.localStorage.setItem('history', JSON.stringify(historyArray));
+		activePrinter = null;
+	};
+
 	start(prints[0]);
 	start(prints[2]);
 	start(prints[3]);
@@ -116,13 +169,16 @@
 <Dialog isOpen={activePrinter !== null}>
 	{#if activePrinter}
 		<h1>Fyll in informasjonen for din print</h1>
-		<form>
+		<form on:submit|preventDefault={handleSubmit}>
 			<div class="input-form">
-				<input type="text" placeholder="Ditt navn" required class="input" />
-				<input type="text" placeholder="Ansvarlig" required class="input" />
-				<input type="text" placeholder="Klasse" class="input" />
+				<input type="text" bind:value={name} placeholder="Ditt navn" required class="input" />
+				<input type="text" bind:value={responsible} placeholder="Ansvarlig" required class="input" />
+				<input type="text" bind:value={classs} placeholder="Klasse" class="input" />
 			</div>
-			<input type="submit" class="submit input"/>
+			<!-- <input type="submit" class="submit input"/> -->
+			<button class="submit input" type="submit">
+				Start print
+			</button>
 			<button on:click={() => (activePrinter = null)} class="input">Close</button>
 		</form>
 	{/if}
@@ -158,7 +214,7 @@
 					</div>
 				{/if}
 
-				<p class="text">Ansvarlig for print: {printers[0].name}</p>
+				<p class="text">Ansvarlig for print: {lastPrinterOne?.responsible}</p>
 			</button>
 
 			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
