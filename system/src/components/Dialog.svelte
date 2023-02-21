@@ -5,12 +5,12 @@
 </script>
 
 {#if isOpen}
-	<div class="dialog" in:fade={{ duration: 300 }} out:fade>
+	<button class="dialog" in:fade={{ duration: 300 }}>
 		<div class="dialog-box">
 			<slot />
 		</div>
-	</div>
-{/if}
+	</button>
+{/if}	
 
 <style>
 	.dialog {
@@ -36,6 +36,8 @@
 		overflow-y: scroll;
 		border-radius: 15px;
 		color: #92959b;
+		z-index: 200;
+		text-align: start;
 
 		/* add shadow here */
 	}

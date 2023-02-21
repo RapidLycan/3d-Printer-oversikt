@@ -118,12 +118,12 @@
 		<h1>Fyll in informasjonen for din print</h1>
 		<form>
 			<div class="input-form">
-				<input type="text" placeholder="Ditt navn" required />
-				<input type="text" placeholder="Ansvarlig" required />
-				<input type="text" placeholder="Klasse" />
+				<input type="text" placeholder="Ditt navn" required class="input" />
+				<input type="text" placeholder="Ansvarlig" required class="input" />
+				<input type="text" placeholder="Klasse" class="input" />
 			</div>
-			<input type="submit" class="submit" />
-			<button on:click={() => (activePrinter = null)}>Close</button>
+			<input type="submit" class="submit input"/>
+			<button on:click={() => (activePrinter = null)} class="input">Close</button>
 		</form>
 	{/if}
 </Dialog>
@@ -254,11 +254,11 @@
 <style>
 	.input-form {
 		display: flex;
-		row-gap: 20px;
+		gap: 15px;
 		margin: 1rem 0;
 	}
 
-	input {
+	.input {
 		background-color: #222222;
 		padding: 10px 30px;
 		border-radius: 1rem;
