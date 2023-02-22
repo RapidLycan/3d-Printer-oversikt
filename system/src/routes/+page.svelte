@@ -1,12 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import Dialog from '../components/Dialog.svelte';
-	/**
-	 * @type {any}
-	 */
+	import '../app.css';
+
+	
 	let activePrinter = null;
 	let history = [];
 
+	//last printer variable
 	let lastPrinterOne = null;
 	let lastPrinterTwo = null;
 	let lastPrinterThree = null;
@@ -19,23 +20,26 @@
 
 	const updateHistory = (newHistory) => {
 		localStorage.setItem('history', JSON.stringify(newHistory));
-		
-			let sorted = newHistory.sort((a, b) => {
-				return new Date(b.date) - new Date(a.date);
-			});
-			lastPrinterOne = sorted.find((item) => item.printer === "1");
-			lastPrinterTwo = sorted.find((item) => item.printer === "2");
-			lastPrinterThree = sorted.find((item) => item.printer === "3");
-			lastPrinterFour = sorted.find((item) => item.printer === "4");
-	}
-
+		// find last printed by date
+		let sorted = newHistory.sort((a, b) => {
+			return new Date(b.date) - new Date(a.date);
+		});
+		// finding the last printer with earlier sorting
+		lastPrinterOne = sorted.find((item) => item.printer === '0');
+		lastPrinterTwo = sorted.find((item) => item.printer === '1');
+		lastPrinterThree = sorted.find((item) => item.printer === '2');
+		lastPrinterFour = sorted.find((item) => item.printer === '3');
+	};
+	// syncs when u open page
 	onMount(() => {
+	// get storage
 		const prevHistory = localStorage.getItem('history');
+		// update history
 		if (prevHistory) {
 			history = JSON.parse(prevHistory);
 			updateHistory(history);
 		}
-	})
+	});
 
 	let prints = [
 		{
@@ -138,15 +142,15 @@
 	let responsible = '';
 	let classs = '';
 
-
 	const handleSubmit = () => {
+		// henter ut verdien som er lagret i localStorage
 		const historyStorage = window.localStorage.getItem('history');
+		// converterer string til array
 		let historyArray = history ? JSON.parse(historyStorage) : [];
 
-		if(!historyArray) historyArray = [];
+		if (!historyArray) historyArray = [];
 
-
-		
+		//Pusher tingene under
 		historyArray.push({
 			name,
 			responsible,
@@ -154,9 +158,10 @@
 			date: new Date().toISOString(),
 			printer: activePrinter.id
 		});
-			updateHistory(historyArray);
-
+		updateHistory(historyArray);
+		// gjør arrayen tilbake til en string????????
 		window.localStorage.setItem('history', JSON.stringify(historyArray));
+		//reseter printer til null
 		activePrinter = null;
 	};
 
@@ -172,13 +177,16 @@
 		<form on:submit|preventDefault={handleSubmit}>
 			<div class="input-form">
 				<input type="text" bind:value={name} placeholder="Ditt navn" required class="input" />
-				<input type="text" bind:value={responsible} placeholder="Ansvarlig" required class="input" />
+				<input
+					type="text"
+					bind:value={responsible}
+					placeholder="Ansvarlig"
+					required
+					class="input"
+				/>
 				<input type="text" bind:value={classs} placeholder="Klasse" class="input" />
 			</div>
-			<!-- <input type="submit" class="submit input"/> -->
-			<button class="submit input" type="submit">
-				Start print
-			</button>
+			<button class="submit input" type="submit"> Start print </button>
 			<button on:click={() => (activePrinter = null)} class="input">Close</button>
 		</form>
 	{/if}
@@ -187,7 +195,7 @@
 <div class="align">
 	<div class="container">
 		<div class="grid">
-			<button class="box" on:click={() => (activePrinter = { id: '1' })}>
+			<button class="box" on:click={() => (activePrinter = { id: '0' })}>
 				<img src="Ultimaker3.png" alt="printer 1" class="image" />
 				<h1 class="text">Ultimaker 3D 3</h1>
 				{#if statusult1 == true}
@@ -213,11 +221,10 @@
 						<span style="width:100" />
 					</div>
 				{/if}
-
 				<p class="text">Ansvarlig for print: {lastPrinterOne?.responsible}</p>
 			</button>
 
-			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
+			<button class="box" on:click={() => (activePrinter = { id: '1' })}>
 				<img src="Ultimaker3Extended.png" alt="printer 2" class="image" />
 				<h1 class="text">Utlimaker Extended 3D 2</h1>
 				{#if statusultex == true}
@@ -243,7 +250,7 @@
 						<span style="width:100" />
 					</div>
 				{/if}
-				<p class="text">Ansvarlig for print: {printers[1].name}</p>
+				<p class="text">Ansvarlig for print: {lastPrinterTwo?.responsible}</p>
 			</button>
 
 			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
@@ -272,10 +279,10 @@
 						<span style="width:100" />
 					</div>
 				{/if}
-				<p class="text">Ansvarlig for print: {printers[2].name}</p>
+				<p class="text">Ansvarlig for print: {lastPrinterThree?.responsible}</p>
 			</button>
 
-			<button class="box" on:click={() => (activePrinter = { id: '2' })}>
+			<button class="box" on:click={() => (activePrinter = { id: '3' })}>
 				<img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 				<h1 class="text">Flashforge</h1>
 				{#if statusforge == true}
@@ -301,149 +308,8 @@
 						<span style="width:100" />
 					</div>
 				{/if}
-				<p class="text">Ansvarlig for print: {printers[3].name}</p>
+				<p class="text">Ansvarlig for print: {lastPrinterFour?.responsible}</p>
 			</button>
 		</div>
 	</div>
 </div>
-
-<style>
-	.input-form {
-		display: flex;
-		gap: 15px;
-		margin: 1rem 0;
-	}
-
-	.input {
-		background-color: #222222;
-		padding: 10px 30px;
-		border-radius: 1rem;
-		font-weight: 600;
-		border: none;
-		color: #92959b;
-	}
-
-	:global(*) {
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	}
-
-	:global(body) {
-		background-color: #0f0f0f;
-		background-image: url(bg.png);
-		background-repeat: no-repeat;
-		background-size: cover;
-		text-decoration: none;
-		height: 100vh;
-		padding: 0 !important;
-		margin: 0 !important;
-	}
-
-	.align {
-		display: flex;
-		align-items: center;
-		height: 100%;
-		width: 100%;
-		margin: 0 auto;
-	}
-
-	.container {
-		width: 100%;
-		max-width: 1000px;
-		margin: 0 auto;
-	}
-
-	.grid {
-		display: grid;
-		justify-content: space-between;
-		align-items: center;
-		margin: 0 auto;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 2rem;
-	}
-
-	.box {
-		background-color: #222222;
-		padding: 10px 30px;
-		border-radius: 1rem;
-	}
-
-	.image {
-		height: 8rem;
-		object-fit: contain;
-		margin: 0 auto;
-		width: 100%;
-	}
-
-	.text {
-		text-align: center;
-		color: #92959b;
-		margin: 10px 10px;
-	}
-
-	.meter {
-		box-sizing: content-box;
-		height: 15px;
-		/* Can be anything */
-		position: relative;
-		background: #555;
-		border-radius: 25px;
-		padding: 5px;
-		box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
-	}
-
-	.meter > span {
-		display: block;
-		height: 100%;
-		border-top-right-radius: 8px;
-		border-bottom-right-radius: 8px;
-		border-top-left-radius: 20px;
-		border-bottom-left-radius: 20px;
-		background-color: rgb(43, 194, 83);
-		background-image: linear-gradient(center bottom, rgb(43, 194, 83) 37%, rgb(84, 240, 84) 69%);
-		box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.broken {
-		box-sizing: content-box;
-		height: 15px;
-		/* Can be anything */
-		position: relative;
-		background: #555;
-		border-radius: 25px;
-		padding: 5px;
-		box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
-	}
-
-	.broken > span {
-		display: block;
-		height: 100%;
-		border-top-right-radius: 8px;
-		border-bottom-right-radius: 8px;
-		border-top-left-radius: 20px;
-		border-bottom-left-radius: 20px;
-		background-color: rgb(194, 43, 43);
-		background-image: linear-gradient(center bottom, rgb(194, 43, 43) 37%, rgb(240, 84, 84) 69%);
-		box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.timer {
-		color: rgb(43, 194, 83);
-		text-align: center;
-		font-size: 14px;
-	}
-
-	.brokenmsg {
-		text-align: center;
-		font-size: 14px;
-		color: rgb(194, 43, 43);
-	}
-
-	h1 {
-		margin-bottom: 5px;
-		font-size: 25px;
-	}
-</style>

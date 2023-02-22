@@ -1,0 +1,150 @@
+<script>
+	import { onMount } from 'svelte';
+
+	let printerOne = [];
+	let printerTwo = [];
+	let printerThree = [];
+	let printerFour = [];
+
+	const getPrinter = (id) => {
+		switch (id) {
+			case '0':
+				return printerOne;
+			case '1':
+				return printerTwo;
+			case '2':
+				return printerThree;
+			case '3':
+				return printerFour;
+			default:
+				return [];
+		}
+	};
+
+	onMount(() => {
+		const history = window.localStorage.getItem('history');
+		if (!history) return;
+		const parsed = JSON.parse(history);
+		const sorted = parsed.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+		printerOne = sorted.filter((x) => x.printer === '0');
+		printerTwo = sorted.filter((x) => x.printer === '1');
+		printerThree = sorted.filter((x) => x.printer === '2');
+		printerFour = sorted.filter((x) => x.printer === '3');
+	});
+
+	let tags = [
+		{
+			id: '0',
+			name: 'Printer 1'
+		},
+		{
+			id: '1',
+			name: 'Printer 2'
+		},
+		{
+			id: '2',
+			name: 'Printer 3'
+		},
+		{
+			id: '3',
+			name: 'Printer 4'
+		}
+	];
+	let activeTag = tags[0].id;
+</script>
+
+<div class="tags">
+	{#each tags as tag}
+		<button
+			class="tag {activeTag === tag.id ? 'bg-variant tag-active' : ''} text-sm"
+			on:click={() => (activeTag = tag.id)}
+		>
+			{tag.name}
+		</button>
+	{/each}
+</div>
+
+<table id="log">
+	<tr>
+		<th>Navn</th>
+		<th>Ansvarlig for print</th>
+		<th>Dato</th>
+		<th>Klasse / Lærer</th>
+	</tr>
+	{#each getPrinter(activeTag) as log}
+		<tr>
+			<td>{log.name}</td>
+			<td>{log.responsible}</td>
+			<td>{new Date(log.date).toLocaleString('nb-NO')}</td>
+			<td>{log.class}</td>
+		</tr>
+	{/each}
+</table>
+
+<style>
+	:global(body) {
+		background-color: #0f0f0f;
+		background-image: url(bg.png);
+		background-repeat: no-repeat;
+		background-size: cover;
+		text-decoration: none;
+		height: 100vh;
+		padding: 0 !important;
+		margin: 0 !important;
+        max-width: 70zrem;
+	}
+
+	.tags {
+		display: flex;
+		gap: 1rem;
+		margin-top: 4rem;
+		margin-bottom: 4rem;
+		justify-content: center;
+	}
+	.tag {
+		padding: 1rem 2rem;
+		background-color: #04aa6d;
+		border: none;
+		border-radius: 25px;
+	}
+	.tag:hover {
+		padding: 1rem 2rem;
+		background-color: red;
+		border: none;
+		border-radius: 25px;
+	}
+	.tag-active {
+		padding: 1rem 2rem;
+		background-color: blue;
+		border: none;
+		border-radius: 25px;
+	}
+	#log {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	#log td,
+	#log th {
+		border: 1px solid #222222;
+		padding: 8px;
+	}
+
+	#log tr:nth-child(even) {
+		background-color: #222222;
+	}
+
+	#log tr:hover {
+		background-color: #222222;
+	}
+
+	#log th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #04aa6d;
+		color: white;
+	}
+</style>
