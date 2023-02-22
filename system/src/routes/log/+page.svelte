@@ -91,8 +91,8 @@
 		text-decoration: none;
 		height: 100vh;
 		padding: 0 !important;
-		margin: 0 !important;
-        max-width: 70zrem;
+		margin: 0 auto !important;
+		max-width: 70rem;
 	}
 
 	.tags {
@@ -104,19 +104,20 @@
 	}
 	.tag {
 		padding: 1rem 2rem;
-		background-color: #04aa6d;
+		background-color: #222222;
 		border: none;
 		border-radius: 25px;
+		color: #92959b;
 	}
 	.tag:hover {
 		padding: 1rem 2rem;
-		background-color: red;
+		background-color: #333333;
 		border: none;
 		border-radius: 25px;
 	}
 	.tag-active {
 		padding: 1rem 2rem;
-		background-color: blue;
+		background-color: #444444;
 		border: none;
 		border-radius: 25px;
 	}
@@ -124,6 +125,8 @@
 		font-family: Arial, Helvetica, sans-serif;
 		border-collapse: collapse;
 		width: 100%;
+		background-color: #222222;
+		color: #92959b;
 	}
 
 	#log td,
@@ -133,18 +136,18 @@
 	}
 
 	#log tr:nth-child(even) {
-		background-color: #222222;
+		background-color: #191919;
 	}
 
 	#log tr:hover {
-		background-color: #222222;
+		background-color: #333333;
 	}
 
 	#log th {
 		padding-top: 12px;
 		padding-bottom: 12px;
 		text-align: left;
-		background-color: #04aa6d;
+		background-color: #0000	;
 		color: white;
 	}
 </style>
