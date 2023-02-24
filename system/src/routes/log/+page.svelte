@@ -25,7 +25,7 @@
 		const history = window.localStorage.getItem('history');
 		if (!history) return;
 		const parsed = JSON.parse(history);
-		const sorted = parsed.sort((a, b) => new Date(b.date) - new Date(a.date));
+		const sorted = parsed.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 		printerOne = sorted.filter((x) => x.printer === '0');
 		printerTwo = sorted.filter((x) => x.printer === '1');

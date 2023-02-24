@@ -22,7 +22,7 @@
 		localStorage.setItem('history', JSON.stringify(newHistory));
 		// find last printed by date
 		let sorted = newHistory.sort((a, b) => {
-			return new Date(b.date) - new Date(a.date);
+			return new Date(b.date).getTime() - new Date(a.date).getTime();
 		});
 		// finding the last printer with earlier sorting
 		lastPrinterOne = sorted.find((item) => item.printer === '0');
@@ -146,7 +146,7 @@
 		// henter ut verdien som er lagret i localStorage
 		const historyStorage = window.localStorage.getItem('history');
 		// converterer string til array
-		let historyArray = history ? JSON.parse(historyStorage) : [];
+		let historyArray = historyStorage ? JSON.parse(historyStorage) : [];
 
 		if (!historyArray) historyArray = [];
 
