@@ -36,19 +36,19 @@
 	let tags = [
 		{
 			id: '0',
-			name: 'Printer 1'
+			name: 'Ultimaker 1'
 		},
 		{
 			id: '1',
-			name: 'Printer 2'
+			name: 'Ultimaker Extended'
 		},
 		{
 			id: '2',
-			name: 'Printer 3'
+			name: 'Ultimaker 2'
 		},
 		{
 			id: '3',
-			name: 'Printer 4'
+			name: 'Flashforge'
 		}
 	];
 	let activeTag = tags[0].id;
@@ -129,8 +129,12 @@
 		color: #92959b;
 	}
 
-	#log td,
-	#log th {
+	#log th{
+		border: 1px solid #222222;
+		padding: 8px;
+		background-color: green;
+	}
+	#log td {
 		border: 1px solid #222222;
 		padding: 8px;
 	}
