@@ -1,37 +1,50 @@
 <script>
+	import { json } from "@sveltejs/kit";
 	import "./page.css"
+
 	let statusult1 = true;
 	let statusult2 = false;
 	let statusultex = false;
 	let statusforge = true;
 
-	let prints = [
-		{
-			hours: 0,
-			minutes: 70,
-			name: 'jonas',
-			printer: 0
-		},
-		{
-			hours: 0,
-			minutes: 20,
-			name: 'kram',
-			printer: 1
-		},
-		{
-			hours: 0,
-			minutes: 1,
-			name: 'jeff',
-			printer: 2
-		},
-		{
-			hours: 2,
-			minutes: 0,
-			name: 'maret',
-			printer: 3
-		}
-	];
+/* 		const whatPrinterReturns = [
+			{
+				"uuid":"f4456e11-985a-4606-92c9-c801971cec0f",
+				"name":"UM3E_FAFO_Desk_Plate",
 
+				"created_at":"2023-02-13T10:03:34.853302",
+				"started":true,
+				
+				"status":"printing",
+				"printer_uuid":"a6dc50a3-9fbb-4840-a7f4-b42f799eafff",
+				"configuration":[{"extruder_index":0,
+				"material":{"guid":"506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9",
+				"brand":"Generic",
+				"material":"PLA",
+				"color":"Generic"},
+				"print_core_id":"AA 0.4",
+				"material_used":10624}],
+				"machine_variant":"Ultimaker 3 Extended",
+				"constraints":{"require_printer_name":"ultimakersystem-ccbdd3000b92"},
+				
+				"time_elapsed":7886,
+				"time_total":8482,
+				
+				"last_seen":6.831140885013156,
+				"network_error_count":0,
+				"force":true,
+				"assigned_to":null,
+				"owner":"USB",
+				"build_plate":{"type":"glass"},
+				"configuration_changes_required":[],
+				"impediments_to_printing":[],
+				"compatible_machine_families":[],
+				"printed_on_uuid":null,
+				"deleted_at":null,
+				"cloud_job_id":null
+			}
+		]
+ */
 	let printers = [
 		{
 			time: 0,
@@ -77,35 +90,93 @@
 		}, cleanTime);
 	}
 
-	function start(amount) {
-		const i = amount.printer;
+/* 	function update(Url) {
+			fetch(`${Url}`)
+		.then(Response => Response.json())
+		.then(response => {
+			console.log(response);
+			setTimeout(()=> {
+				return(response)
+			}, 1000)
+		}, error => {
+			console.log(error);
+		});
+		} */
 
-		printers[i].time = amount.minutes + amount.hours * 60;
-		printers[i].name = amount.name;
+	function start(machine) {
+		
+		let printUrl;
+		if(machine == 0){
+			printUrl = "http://10.229.242.19/cluster-api/v1/print_jobs/printing"
+		} else if (machine == 1){
+			printUrl == "http://10.229.242.36/cluster-api/v1/print_jobs/printing"
+		} else if (machine == 2){
+			printUrl == "http://10.229.x.x/cluster-api/v1/print_jobs/printing"
+		} else if (machine == 3){
+			printUrl == "http://10.229.x.x/cluster-api/v1/print_jobs/printing"
+		}
+		const i = machine
 
-		printers[i].timerCount = printers[i].time * 60;
+		/* const fetchUrl = async (url) => {
+        const response = await fetch(url);
+        console.log('status: ', response.status);
+        // if(!response.ok) throw new Error(response.statusText);
+        const data = await response.json();
+        console.log(data);
+		return(data.promised)
+    	};
+		
+		const data = fetchUrl(printUrl)
+		console.log(data); */
 
-		var barTimer = setInterval(() => {
-			if (printers[i].timeBar >= 100) {
-				clearInterval(barTimer);
-				clean(i, 86400000);
+
+		async function fetchData(url){
+			try {
+				const response = await fetch(url);
+				const data = await response.json();
+				return data;
+			} catch (error) {
+				console.log(error);
 			}
-			printers[i].timeBar += 0.1;
-		}, calcTimeLeft(printers[i].time));
+		}
 
-		var leftTime = setInterval(() => {
-			if (printers[i].timerCount > 0) {
-				printers[i].timerCount--;
-			} else {
-				clearInterval(leftTime);
-			}
-		}, 1000);
+		async function main() {
+			const data = await fetchData(printUrl);
+			console.log(data);
+
+			printers[i].time = data[0].time_total;
+	
+			printers[i].timerCount = data[0].time_total - data[0].time_elapsed;
+			printers[i].timeBar = (data[0].time_elapsed / data[0].time_total) * 100
+
+			var barTimer = setInterval(() => {
+				if (printers[i].timeBar >= 100) {
+					clearInterval(barTimer);
+					clean(i, 86400000);
+				}
+				printers[i].timeBar += 0.1;
+			}, calcTimeLeft(printers[i].time));
+	
+			var leftTime = setInterval(() => {
+				if (printers[i].timerCount > 0) {
+					printers[i].timerCount--;
+				} else {
+					clearInterval(leftTime);
+				}
+			}, 1000);
+		}
+
+		main();
+
+			
+			
+			
+
 	}
 
-	start(prints[0]);
-	start(prints[2]);
-	start(prints[3]);
-	start(prints[1]);
+
+	start(0);
+
 </script>
 
 <div class="container">
