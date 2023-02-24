@@ -130,6 +130,7 @@
 			printers[i].name = undefined;
 			printers[i].timeCount = 0;
 		}, cleanTime);
+
 	}
 
 /* 	function update(Url) {
@@ -287,7 +288,7 @@
 							</p>
 						{/if}
 					{:else}
-						<p>Ready</p>
+						<p class="timer">Ready</p>
 					{/if}
 					<div class="meter">
 						<span style="width: {printers[0].timeBar}%" />
@@ -316,7 +317,7 @@
 							</p>
 						{/if}
 					{:else}
-						<p>Ready</p>
+						<p class="timer">Ready</p>
 					{/if}
 					<div class="meter">
 						<span style="width: {printers[1].timeBar}%" />
@@ -345,7 +346,7 @@
 							</p>
 						{/if}
 					{:else}
-						<p>Ready</p>
+						<p class="timer">Ready</p>
 					{/if}
 					<div class="meter">
 						<span style="width: {printers[2].timeBar}%" />
@@ -358,7 +359,7 @@
 				{/if}
 				<p class="text">Ansvarlig for print: {lastPrinterThree?.responsible}</p>
 			</button>
-
+<!-- 
 			<button class="box" on:click={() => (activePrinter = { id: '3' })}>
 				<img src="FlashforgeCreator3Pro.png" alt="printer 4" class="image" />
 				<h1 class="text">Flashforge</h1>
@@ -387,6 +388,6 @@
 				{/if}
 				<p class="text">Ansvarlig for print: {lastPrinterFour?.responsible}</p>
 			</button>
-		</div>
+	 -->	</div>
 	</div>
 </div>
