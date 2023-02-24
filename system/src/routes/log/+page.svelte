@@ -32,6 +32,8 @@
 		printerThree = sorted.filter((x) => x.printer === '2');
 		printerFour = sorted.filter((x) => x.printer === '3');
 	});
+	onMount (() => (activeTag = tags.id))
+
 
 	let tags = [
 		{

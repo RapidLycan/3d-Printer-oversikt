@@ -14,13 +14,12 @@
 	let lastPrinterFour = null;
 
 	import { json } from "@sveltejs/kit";
-	import "./page.css"
 
 
 	let statusult1 = true;
 	let statusult2 = false;
-	let statusultex = false;
-	let statusforge = true;
+	let statusultex = true;
+	let statusforge = false;
 
 	const updateHistory = (newHistory) => {
 		localStorage.setItem('history', JSON.stringify(newHistory));
@@ -59,7 +58,9 @@
 				"configuration":[{"extruder_index":0,
 				"material":{"guid":"506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9",
 				"brand":"Generic",
+				
 				"material":"PLA",
+
 				"color":"Generic"},
 				"print_core_id":"AA 0.4",
 				"material_used":10624}],
@@ -185,6 +186,8 @@
 			const data = await fetchData(printUrl);
 			console.log(data);
 
+
+
 			printers[i].time = data[0].time_total;
 	
 			printers[i].timerCount = data[0].time_total - data[0].time_elapsed;
@@ -215,6 +218,7 @@
 	let classs = '';
 
 	const handleSubmit = () => {
+		start(activePrinter.id)
 		// henter ut verdien som er lagret i localStorage
 		const historyStorage = window.localStorage.getItem('history');
 		// converterer string til array
@@ -240,7 +244,7 @@
 	
 
 
-	start(0);
+	
 
 </script>
 
